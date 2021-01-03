@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Simple Tree Example</title>
+
+	<style someProperty="text/css">
+		@import "../dojo/resources/dojo.css";
+		@import "../dijit/css/dijitTests.css";
+		
+	</style>
+
+	<!-- required: the default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../dijit/themes/tundra/tundra.css">
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	
+	<script language="JavaScript" someProperty="text/javascript">
+		dojo.require("dijit.dijit"); // optimize: load dijit layer
+		dojo.require("dojo.data.ItemFileReadStore");
+		//dojo.require("dojo.data.ItemFileWriteStore");
+		dojo.require("dijit.Tree");		
+		// Declare function that will be called when page is fully loaded
+		dojo.addOnLoad(function()
+		{
+			// Create a simple Store to hold the JSON test data.
+ 			//myStore = new dojo.data.ItemFileReadStore({url:'test.json'});
+			var data = { 
+				identifier: 'id',
+				label: 'name',
+				items: [
+								
+						{ id: '1', name:'Cars' ,
+						children: [
+							{id: '10', name: 'Car1'},
+							{id: '11', name: 'Car2'},
+							{id: '12', name: 'Car3'},
+						]
+						},
+						{ id: '2', name:'Motorcycles',
+						children: [
+							{id: '20', name: 'Motorcycle1'},
+							{id: '21', name: 'Motorcycle2'},
+							{id: '22', name: 'Motorcycle3'},
+						]
+						},
+						{ id: '3', name:'Planes',
+							
+						children: [
+							{id: '30', name: 'Plane1'},
+							{id: '31', name: 'Plane2'},
+							{id: '32', name: 'Plane3'},
+						]
+						},
+						{ id: '4', name:'Submarines',
+						children: [
+							{id: '40', name: 'Submarine1'},
+							{id: '41', name: 'Submarine2'},
+							{id: '42', name: 'Submarine3'},
+						]
+						}
+				
+				]
+			}
+			myStore = new dojo.data.ItemFileReadStore({data: data})
+			
+			//myModel = new dijit.tree.TreeStoreModel({
+			myModel = new dijit.tree.ForestStoreModel({
+				store: myStore,
+				query: {name:'*'},
+				rootLabel: 'vehicles'
+			});
+			
+			myTree = new dijit.Tree({
+				id: "myTree",
+				model: myModel,
+				childrenAttrs: ["children"]	
+				
+			});
+			dojo.byId("container").appendChild(myTree.domNode);
+			myTree.startup();
+		});
+		
+	</script>
+</head>
+<body class="tundra">
+        <h1 class="testTitle">Chapter 7 simple Tree test</h1>
+
+        <div id="container"></div>
+</body>
+</html>

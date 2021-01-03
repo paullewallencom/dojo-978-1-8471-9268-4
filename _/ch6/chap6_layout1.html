@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Chapter 6 Layout Example</title>
+	<style>
+		@import "dojo-1.1.0/dojo/resources/dojo.css";
+		@import "dojo-1.1.0/dijit/tests/css/dijitTests.css";
+		@import "dojo-1.1.0/dijit/themes/tundra/tundra.css";
+		@import "dojo-1.1.0/dojox/widget/Rating/Rating.css"; 
+	</style>
+	<script type="text/javascript" src="dojo-1.1.0/dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	<script type="text/javascript">		
+		dojo.require("dijit.Menu");
+		dojo.require("dijit.form.CheckBox");
+		dojo.require("dijit.form.TextBox");
+		dojo.require("dijit.layout.BorderContainer");
+		dojo.require("dijit.layout.ContentPane");	
+		dojo.require("dijit.form.Button");
+		dojo.require("dijit.Toolbar");
+		dojo.require("dojox.widget.Rating");
+		dojo.require("dojox.layout.ScrollPane");
+		
+		dojo.require("dijit.layout.AccordionContainer");
+		dojo.require("dojo.parser");	// scan page for widgets and instantiate them
+	</script>
+	
+	<script>
+		function handleMenu(m)
+		{
+			console.log("handleMenu called for menu '"+m+"'");
+		}
+	</script>
+</head>
+
+<body class="tundra">
+	<div dojoType="dijit.layout.BorderContainer" style="border: 1px solid black; height: 300px; width:300px;padding: 10px;">
+		<div dojoType="dijit.layout.ContentPane" region="top" style="background-color: #blue">
+			<div id="menubar" dojoType="dijit.Toolbar" class="menuBar">
+				<div dojoType="dijit.form.DropDownButton">
+					<span>File</span>
+					<div dojoType="dijit.Menu">
+						<div dojoType="dijit.MenuItem" onClick="handleMenu('New profile')">New Profile</div>
+						<div dojoType="dijit.MenuItem" onClick="handleMenu('Open Profile')">Open Profile</div>
+						<div dojoType="dijit.MenuSeparator"></div>
+						<div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconSave" onClick="handleMenu('Save Profile')">Save Profile</div>
+						<div dojoType="dijit.MenuItem" onClick="handleMenu('Save Profile As..')">Save Profile As...</div>
+					</div>
+				</div>
+				<div dojoType="dijit.form.DropDownButton">
+					<span>Edit</span>
+					<div dojoType="dijit.Menu">
+						<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconCut"	 onClick="handleMenu('Cut')">Cut</div>
+						<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconCopy"	 onClick="handleMenu('Copy')">Copy</div>
+						<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconPaste" onClick="handleMenu('Paste')">Paste</div>
+					</div>
+				</div>
+				
+			</div>	
+		</div>
+		
+		<div dojoType="dijit.layout.ContentPane" region="center">
+			<div dojoType="dijit.layout.AccordionContainer"	style="height: 210px;  overflow: hidden">
+				<div dojoType="dijit.layout.AccordionPane" title="Overview">
+					Profile: <b>Foo Barsson</b><br/>
+					Status: <b>Cool</b>
+				</div>
+				<div dojoType="dijit.layout.AccordionPane" title="Quests">
+					<bl>
+						<li>Defeat Giant Mouse in the Cellar of Hierloom House</li>
+						<li>Find the Apple of Perfume for Fiona the Enchantress</li>
+						<li>Collect six Emerald Centipedes</li>
+					</bl>	
+				</div>
+				<div dojoType="dijit.layout.AccordionPane" title="Charateristics">
+					<span id="rating0" dojoType="dojox.widget.Rating" numStars="5" value = "5" onChange="dojo.query('#rating0Value')[0].innerHTML = this.value"></span>
+					Strength: <b><span id="rating0Value">5</span></b>
+					<br/>
+					<span id="rating1" dojoType="dojox.widget.Rating" numStars="5" value = "4" onChange="dojo.query('#rating1Value')[0].innerHTML = this.value"></span>
+					Intelligence: <b><span id="rating1Value">5</span></b>
+					<br/>
+					<span id="rating2" dojoType="dojox.widget.Rating" numStars="5" value = "2" onChange="dojo.query('#rating2Value')[0].innerHTML = this.value"></span>
+					Wisdom: <b><span id="rating2Value">2</span></b>
+					<br/>
+					<span id="rating3" dojoType="dojox.widget.Rating" numStars="5" value = "5" onChange="dojo.query('#rating3Value')[0].innerHTML = this.value"></span>
+					Dexterity: <b><span id="rating3Value">5</span></b>
+					<br/>
+					<span id="rating4" dojoType="dojox.widget.Rating" numStars="5" value = "4" onChange="dojo.query('#rating4Value')[0].innerHTML = this.value"></span>
+					Charisma: <b><span id="rating4Value">4</span></b>
+					<br/>
+				</div>
+				
+			</div>
+				<div dojoType="dojox.layout.ScrollPane" region="bottom" orientation="horizontal" style=" border:1px solid #b7b7b7">
+						<table class="list" id="vertList">
+							<tr>
+								<td style="border:1px solid black;">Dagger</td>
+								<td style="border:1px solid black;">Banded Mail</td>
+								<td style="border:1px solid black;">Potion</td>
+								<td style="border:1px solid black;">Short Sword</td>
+								<td style="border:1px solid black;">Pointed Hat</td>
+								<td style="border:1px solid black;">Leather Boots</td>
+								<td style="border:1px solid black;">Small Wooden Box</td>
+								<td style="border:1px solid black;">Steel Helmet</td>
+								<td style="border:1px solid black;">6 Wooden Arrows</td>
+								<td style="border:1px solid black;">Orc Teeth</td>
+								<td style="border:1px solid black;">Wooden Staff</td>
+								<td style="border:1px solid black;">Zircon Ring</td>
+							</tr>
+						</table>
+					</div>
+		</div>	
+	</div>
+	
+</body>
+</html>

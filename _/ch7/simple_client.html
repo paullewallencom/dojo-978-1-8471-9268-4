@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Simple Client Example</title>
+
+	<style someProperty="text/css">
+		@import "../dojo/resources/dojo.css";	
+	</style>
+
+	<!-- required: the default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../dijit/themes/tundra/tundra.css">
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	
+	<script language="JavaScript" someProperty="text/javascript">
+		
+		dojo.require("dojo.data.api.Read");
+		dojo.require("dojox.rpc.Service");
+		dojo.require("dojox.rpc.Rest");		
+		dojo.require("dojox.data.JsonRestStore");
+
+		dojo.addOnLoad(function()
+		{
+			//console.log("creating SMD service");			
+			var testServices = new dojox.rpc.Service("test2.smd");	
+			console.log("creating json store");
+			//var jsonStore = new dojox.data.PersevereStore({target: "fakestore.php"});			
+			var jsonStore = new dojox.data.JsonRestStore({service:testServices.jsonRestStore});
+
+			jsonStore.fetch({query:"obj1", 
+				onComplete: function(item, request)
+				{
+					console.log("item:");
+					console.dir(item);
+					console.log("jsonStore fetch query; item name = "+ item.name+", Setting value..");						
+					var now = new Date().getTime();
+					jsonStore.setValues(item, "items", []);
+					jsonStore.save();
+					console.log("jsonStore setValue done. Creating object");
+					var newObject = jsonStore.newItem({"name":"new object"}, {parent: item, attribute: 'items'});					
+					console.log("jsonStore saving new item ...");					
+					console.log("new object:");
+					console.dir(newObject);
+					jsonStore.save();
+					
+			}});
+
+		});
+		
+	</script>
+</head>
+<body class="tundra">
+        <h1 class="testTitle">Chapter 7 simple client test</h1>
+	<br/>
+        <div id="container"></div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Simple Tree Event Example</title>
+
+	<style someProperty="text/css">
+		@import "../dojo/resources/dojo.css";
+		@import "../dijit/css/dijitTests.css";
+		
+	</style>
+
+	<style>
+		.foo
+		{
+			color: red;
+		}
+	
+		.bar
+		{
+			color: blue;
+		}
+	</style>
+
+	<!-- required: the default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../dijit/themes/tundra/tundra.css">
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	
+	<script language="JavaScript" someProperty="text/javascript">
+		dojo.require("dijit.dijit"); // optimize: load dijit layer
+		dojo.require("dojo.data.ItemFileReadStore");
+		//dojo.require("dojo.data.ItemFileWriteStore");
+		dojo.require("dijit.Tree");		
+		// Declare function that will be called when page is fully loaded
+		dojo.addOnLoad(function()
+		{
+			// Create a simple Store to hold the JSON test data.
+ 			myStore = new dojo.data.ItemFileReadStore({url:'test.json'});		
+			myModel = new dijit.tree.TreeStoreModel({			
+				store: myStore,
+				query: {name:'*'}				
+			});
+			
+			myTree = new dijit.Tree({
+				id: "myTree",
+				model: myModel,
+				childrenAttrs: ["children"]				
+			});
+			dojo.byId("container").appendChild(myTree.domNode);
+			myTree.startup();
+			
+			myTree.getIconClass = function(item, opened)
+			{
+				console.log("--------------getIconClass called for '"+item.name+"'");
+				return (!item || myTree.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+			}
+
+			myTree.getLabelClass = function(item, opened)
+			{
+				var rv = 'foo';
+				
+				if(item.name == 'Motorcycles')
+				{
+					rv = 'bar';
+				}
+				console.log("--------------getLabelClass called for '"+item.name+"', returns '"+rv+"'");
+				return rv;
+			}
+
+			myTree.getLabel = function(item)
+			{
+				return "_"+item.name
+			}
+
+			dojo.connect(myTree, "onClick", this, function(e)
+			{
+				// e is the actual item from the store
+				console.log("--------------------onClick");
+				console.dir(e);
+				dojo.byId("onclickmessages").innerHTML += e.id +" "+e.name + " clicked\n";
+			});
+
+			dojo.connect(myTree, "onOpen", this, function(e)
+			{
+				// e is the actual item from the store
+				console.log("--------------------onOpen");
+				console.dir(e);
+				dojo.byId("onclickmessages").innerHTML += "onOpen for "+e.name+"\n";
+			});
+	
+			dojo.connect(myTree, "onClose", this, function(e)
+			{
+				// e is the actual item from the store
+				console.log("--------------------onClose");
+				console.dir(e);
+				dojo.byId("onclickmessages").innerHTML += "onClose for "+e.name+"\n";
+			});
+			
+			
+		});
+		
+	</script>
+</head>
+<body class="tundra">
+        <h1 class="testTitle">Chapter 7 simple Tree Events test</h1>
+	<br/>
+	<div style="width:400px">
+        	<div id="container" style="width:200px;float:right;margin-left:10px;"></div>
+		<textarea rows="10" id="onclickmessages"></textarea>		
+	</div>	
+</body>
+</html>

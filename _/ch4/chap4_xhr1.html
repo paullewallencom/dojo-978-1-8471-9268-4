@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<title> Chapter 4 XHR test</title>
+		<style type="text/css">
+		@import "http://o.aolcdn.com/dojo/1.1.0/dojo/resources/dojo.css";
+		@import "http://o.aolcdn.com/dojo/1.1.0/dijit/themes/dijit.css";
+		@import "http://o.aolcdn.com/dojo/1.1.0/dijit/themes/tundra/tundra.css";
+		</style>
+		<script>
+		var djConfig=
+		{
+		    isDebug: true,
+		    parseOnLoad: true
+		};		
+		</script>
+		<script type="text/javascript" src="http://o.aolcdn.com/dojo/1.1.0/dojo/dojo.xd.js">
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+			dojo.require("dojo.parser");
+			dojo.require("dijit.form.Button");
+
+			function _onClick()
+			{
+				var arg = dojo.byId('inp').value;
+				dojo.xhr("Get", 
+				{
+					url:"server_ch4.php?arg="+arg, 
+					handleAs: "text",
+					load: function(data, ioArgs)
+					{
+						console.log(ioArgs);
+						var ta = dojo.byId('ta');
+						ta.value = ta.value + data;
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="inp">
+		<div dojoType="dijit.form.Button" id="button" onClick="_onClick();">Send</div>
+		<textarea id="ta"></textarea>
+	</body>
+</html>

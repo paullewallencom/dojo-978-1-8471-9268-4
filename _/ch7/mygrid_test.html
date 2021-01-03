@@ -1,0 +1,39 @@
+<html>
+    <head>
+        
+        <link href="../dojo/resources/dojo.css" rel="stylesheet" type="text/css"/>
+        <link href="../dijit/themes/dijit.css" rel="stylesheet" type="text/css"/>
+	<link href="../dijit/themes/tundra/tundra.css" rel="stylesheet" type="text/css" />
+
+	<link href="../dojox/grid/resources/Grid.css" rel="stylesheet" type="text/css"/>
+	<link href="../dojox/grid/resources/tundraGrid.css" rel="stylesheet" type="text/css"/>			
+        
+        <link href="/favicon.ico" rel="shortcut icon"/>
+        <title>myGrid Test</title>
+        <script type="text/javascript">
+        djConfig=
+        { 
+		parseOnLoad: true, 
+                isDebug: true,
+                debugAtAllCosts: true,
+                modulePaths: {mygrid: "../test/mygrid"}
+	}
+        </script>
+        <script src="../dojo/dojo.js"  type="text/javascript"></script>
+
+        <script type="text/javascript">
+          dojo.require("mygrid.crud");
+        </script>
+		
+    </head>
+   <body class="tundra">
+    
+    <div dojoType="mygrid.crud" model="rooms" layout='
+          [
+          { field: "name", width: "120px", name: "name", editable: true  },
+          { field: "location", width: "auto", name: "content", editable: true}          
+          ];' style="margin: 20px;height:300px; width:500px;"></div>
+  
+  </body>
+</html>
+

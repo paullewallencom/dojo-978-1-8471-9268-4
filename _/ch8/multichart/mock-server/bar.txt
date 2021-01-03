@@ -1,0 +1,16 @@
+{
+  labels: 
+  [
+    {value: 0, text: ""},
+    {value: 1, text: "January"}, 
+    {value: 2, text: "Febuary"},
+    {value: 3, text: "March"}, 
+    {value: 4, text: "April"},
+    {value: 5, text: "May"}, 
+  ],
+  series: 
+  {
+    whatnots: [ 1, 6, 9, 4, 5, 2 ],
+    also_rans: [5, 4, 3, 2, 1]
+  }
+} 

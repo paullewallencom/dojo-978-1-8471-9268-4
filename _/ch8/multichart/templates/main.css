@@ -1,0 +1,29 @@
+.multichart_container
+{
+  
+}
+
+.multichart_title
+{
+  height: 15px;
+  border-bottom: 1px solid black;
+  text-align: center;
+  background: #90de52;
+}
+
+.multichart_chart
+{  
+  height:200px;
+  position: relative;
+}
+
+.multichart_chart_div
+{
+  position: relative;
+  border: 1px solid black;
+}
+
+.multichart_legend
+{
+  height: 30px;  
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Chapter 5 Form Test</title>
+	<style>
+		@import "dojo-1.1.0/dojo/resources/dojo.css";
+		@import "dojo-1.1.0/dijit/tests/css/dijitTests.css";		
+	</style>
+	<script type="text/javascript" src="dojo-1.1.0/dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	<script type="text/javascript">		
+		dojo.require("dijit.form.Form");
+		dojo.require("dijit.form.CheckBox");
+		dojo.require("dijit.form.TextBox");				
+		dojo.require("dojo.parser");	// scan page for widgets and instantiate them
+	</script>
+	
+	<script>
+		dojo.addOnLoad(function()
+		{
+			dojo.connect(dojo.byId("formtest"), "onsubmit", function(e) 
+			{
+				e.preventDefault();				
+				var id = e.currentTarget.id;
+				console.log("submit for "+id+" contained values;");
+				var formwidget  = dijit.byId(id);	
+				var values = formwidget.getValues();	
+				for(var key in values)
+				{
+					var value = values[key]; 
+					console.log(key+" -> "+value);
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<form id="formtest" dojoType="dijit.form.Form">
+		<input type="text" name="textbox1" value="something" dojoType="dijit.form.TextBox" />
+		<input type="checkbox" name="checkbox1" value="foo" dojotype="dijit.form.CheckBox" checked="checked" value="foo" /> 
+		<input type="submit"/>	
+	</form>
+
+</body>
+</html>

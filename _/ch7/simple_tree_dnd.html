@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Simple Tree Example</title>
+
+	<style someProperty="text/css">
+		@import "../dojo/resources/dojo.css";
+		@import "../dijit/css/dijitTests.css";
+		
+		@import "../dojo/resources/dnd.css";
+		@import "../dojo/tests/dnd/dndDefault.css";
+	</style>
+		
+	</style>
+
+	<!-- required: the default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../dijit/themes/tundra/tundra.css">
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../dojo/dojo.js"
+		djConfig="isDebug: true, parseOnLoad: true"></script>
+
+	
+	<script language="JavaScript" someProperty="text/javascript">
+		dojo.require("dijit.dijit"); // optimize: load dijit layer
+		
+		dojo.require("dojo.data.ItemFileWriteStore");
+		dojo.require("dijit.Tree");
+
+		dojo.require("dijit._tree.dndSource");
+		dojo.require("dojo.dnd.common");
+		dojo.require("dojo.dnd.Source");
+		
+		// Declare function that will be called when page is fully loaded
+		dojo.addOnLoad(function()
+		{
+			// Create a simple Store to hold the JSON test data.
+ 			myStore = new dojo.data.ItemFileWriteStore({url:'test.json'});
+			
+			myModel = new dijit.tree.ForestStoreModel({
+				store: myStore,
+				query: {name:'*'},
+				rootLabel: 'vehicles'
+			});
+
+			function itemTreeCheckItemAcceptance(node,source) 
+			{
+				console.log("itemTreeCheckItemAcceptance called with "+node+" and "+source);
+				var item = dijit.getEnclosingWidget(node).item;
+				if (item && (item.root || myModel.mayHaveChildren(item))){
+					return true;
+				}
+				return false;
+			}			
+
+			function dndAccept(source,nodes){
+				
+				return true;
+			}
+
+			myTree = new dijit.Tree({
+				id: "myTree",
+				model: myModel,
+				childrenAttrs: ["children"],
+				dndController: dijit._tree.dndSource,
+				checkAcceptance: dndAccept,
+				checkItemAcceptance: itemTreeCheckItemAcceptance
+				
+			});
+			dojo.byId("container").appendChild(myTree.domNode);
+			myTree.startup();
+		});
+		
+	</script>
+</head>
+<body class="tundra">
+	<div style="width:500px">
+		<h1>Chapter 7 simple Tree DnD test</h1>
+	
+		<div id="container" style="width:200px;float:right;margin-left:10px;"></div>
+		<div>
+			<h2>Items: </h2>
+			<p>List of Items to be categorized<p>
+			<div dojoType="dojo.dnd.Source" jsId="c2" class="container" style="height: 100px; overflow: auto">
+			<div class="dojoDndItem" id="1001">Apple</div>
+			<div class="dojoDndItem" id="1002">Orange</div>
+			<div class="dojoDndItem" id="1003">Banana</div>
+			<div class="dojoDndItem" id="1004">Tomato</div>
+			<div class="dojoDndItem" id="1005">Pepper</div>
+			<div class="dojoDndItem" id="1006">Wheat</div>
+			<div class="dojoDndItem" id="1007">Corn</div>
+			<div class="dojoDndItem" id="1008">Spinach</div>
+			<div class="dojoDndItem" id="1009">Cucumber</div>
+			<div class="dojoDndItem" id="1010">Carrot</div>
+			<div class="dojoDndItem" id="1011">Potato</div>
+			<div class="dojoDndItem" id="1012">Grape</div>
+			<div class="dojoDndItem" id="1013">Lemon</div>
+			<div class="dojoDndItem" id="1014">Lettuce</div>
+			<div class="dojoDndItem" id="1015">Peanut</div>
+		</div>
+	</div>
+</body>
+</html>

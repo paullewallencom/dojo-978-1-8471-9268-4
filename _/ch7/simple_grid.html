@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Test dojox.grid.Grid Simple Structure</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+	<style type="text/css">
+		@import "../dojox/grid/resources/Grid.css";
+		@import "../dojox/grid/resources/tundraGrid.css";
+		@import "../dojo/resources/dojo.css";
+		@import "../dijit/themes/tundra/tundra.css";
+		body {
+			font-size: 0.9em;
+			font-family: Geneva, Arial, Helvetica, sans-serif;
+		}
+		.heading {
+			font-weight: bold;
+			padding-bottom: 0.25em;
+		}
+				
+		
+	</style>
+	<script type="text/javascript" src="../dojo/dojo.js" djConfig="isDebug:false, parseOnLoad: true"></script>
+	<script type="text/javascript">
+		dojo.require("dojox.grid.DataGrid");
+		dojo.require("dojo.data.ItemFileWriteStore");
+		dojo.require("dojo.parser");
+	</script>
+	
+	<script type="text/javascript">
+		
+			console.log("attempting to load store");
+			//var test_store = new dojo.data.ItemFileWriteStore({url:'test3.json'});
+			var data = 
+			{ 
+				identifier: 'id',
+				label: 'name',
+				items: [		
+					{ id: '1', name:'Cars' , speed: '200'},
+					{ id: '2', name:'Motorcycles', speed: '300'},
+					{ id: '3', name:'Planes', speed: '1200'},
+					{ id: '4', name:'Submarines', speed: '200'},
+					{ id: '5', name:'Trains', speed: '300'}	
+				]
+			};
+
+			var test_store = new dojo.data.ItemFileWriteStore({data: data});
+
+			console.log("test store loaded");
+			
+			function formatSpeed(value)
+			{
+				
+				console.log("formatSpeed value = "+value);
+				var rv = "<b>low</b>";			
+				if (value > 200) rv = "<i>medium</i>";
+				if (value > 300) rv = "<u>high</u>";
+				return rv;
+				
+			}
+	
+			function getSpeed(rowIndex, item)
+			{
+				if(item)
+				{
+					console.log("getSpeed rowIndex = "+rowIndex+", item = "+item);
+					var value = test_store.getValue(item, "speed");				
+					return parseInt(value);
+				}
+			}
+	
+			var layout = [
+				{name: 'Id', field: 'id'},
+				{name: 'Name', field: 'name'},
+				{name: 'Speed', field: 'speed', get:getSpeed, formatter: formatSpeed}
+			];
+			
+			
+
+			console.log("Defining custom sorter");			
+			test_store.comparatorMap = {};
+			test_store.comparatorMap.speed = function(a, b)
+			{				
+				var ret = 0;
+				var x = parseInt(a);
+				var y = parseInt(b);	
+				
+				if (x > y) 
+				{
+					ret = 1;
+				}
+				if (x < y) 
+				{
+					ret = -1;
+				}
+				console.log("comparator called for "+a+" and "+b+" returning "+ret);
+				return ret;
+			};
+			console.log("custom sorter done");
+			//var cp = new dijit.layout.ContentPane({}, dojo.byId("grid"));
+			//cp.addChild(grid);
+		
+	</script>
+</head>
+<body>
+	<div class="heading">dojox.grid.Grid Basic Test</div>
+	<div id="grid" jsid="grid" dojoType="dojox.grid.DataGrid" store="test_store" structure="layout"></div>
+</body>
+</html>

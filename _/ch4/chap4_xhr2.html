@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title> Chapter 4 XHR POST test</title>
+		<style type="text/css">
+		@import "http://o.aolcdn.com/dojo/1.1.0/dojo/resources/dojo.css";
+		@import "http://o.aolcdn.com/dojo/1.1.0/dijit/themes/dijit.css";
+		@import "http://o.aolcdn.com/dojo/1.1.0/dijit/themes/tundra/tundra.css";
+		</style>
+		<script>
+		var djConfig=
+		{
+		    isDebug: true,
+		    parseOnLoad: true
+		};		
+		</script>
+		<script type="text/javascript" src="http://o.aolcdn.com/dojo/1.1.0/dojo/dojo.xd.js">
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+			dojo.require("dojo.parser");
+			dojo.require("dijit.form.Button");
+
+			function _onClick()
+			{
+				console.log("Sending data to server");				
+				dojo.xhrPost( 
+				{
+					url:"server2_ch4.php", 
+					handleAs: "text",
+					load: function(data, ioArgs)
+					{						
+						var ta = dojo.byId('ta');
+						ta.value = ta.value + data;
+					},
+					form: 'theform'
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<form id="theform" style="width:300px;">
+			<label for="name" style="float:left;">Name:</label><input type="text" id="name" name="name" style="float:right;"><br/>
+			<label for="age" style="float:left;">Age:</label><input type="text" id="age" name="age" style="float:right;"><br/>
+			<label for="shoesize" style="float:left;">Shoe Size:</label><input type="text" id="shoesize" name="shoesize" style="float:right;"><br/>
+			<label for="weight" style="float:left;">Weight:</label><input type="text" id="weight" name="weight" style="float:right;"><br/>
+		</form>
+		<div dojoType="dijit.form.Button" id="button" onClick="_onClick();">Send</div><br/>
+		<textarea id="ta" cols="40" rows="10"></textarea>
+	</body>
+</html>

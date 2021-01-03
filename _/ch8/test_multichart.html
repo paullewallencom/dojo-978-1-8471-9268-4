@@ -1,0 +1,39 @@
+ 
+<html>
+    <head>
+        <link href="multichart/templates/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../dojo/resources/dojo.css" rel="stylesheet" type="text/css"/>
+        <link href="../dijit/themes/dijit.css" rel="stylesheet" type="text/css"/>
+	<link href="../dijit/themes/tundra/tundra.css" rel="stylesheet" type="text/css" />
+        <link href="../dojox/layout/resources/GridContainer.css" rel="stylesheet">
+	<link href="../dojox/layout/resources/DndGridContainer.css" rel="stylesheet">
+
+        <title>Test Multichart</title>
+      
+        <script type="text/javascript">
+        djConfig=
+        { 
+		parseOnLoad: true, 
+                isDebug: true,
+                //debugAtAllCosts: true,
+                modulePaths: {multichart: "../test/multichart"}
+	}
+        </script>
+        <script src="../dojo/dojo.js"  type="text/javascript"></script>
+
+        <script type="text/javascript">
+            /* all dojo.require statements go here */            
+            dojo.require("dojo.parser"); 
+            dojo.require("multichart.main");
+            
+        </script>
+		
+    </head>
+  <body class="tundra">
+    <div dojoType="multichart.main" content="{'foo': 'multichart/mock-server/foo.txt',
+                                              'bar': 'multichart/mock-server/bar.txt', 
+                                              'baz': 'multichart/mock-server/baz.txt',
+                                              'quux': 'multichart/mock-server/quux.txt' }">
+    </div> 
+  </body>
+</html>

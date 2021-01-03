@@ -1,0 +1,3 @@
+<div> 
+  <div dojoAttachPoint="mycontainer" style="height:300px;width:500px;"></div>
+</div>
